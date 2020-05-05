@@ -81,17 +81,14 @@ export class MapComponent {
     onMapReady(event) {
         console.log('Map Ready');
 
-        this.mapView = event.object;
+       this.mapView = event.object;
 
-
-        var marker = new Marker();
-        marker.position = Position.positionFromLatLng(-33.86, 151.20);
-        marker.title = "Sydney";
-        marker.snippet = "Australia";
-        marker.userData = {index: 1};
-        this.mapView.addMarker(marker);
+       this.loadMarkers();
+        
     }
 
+
+    
 
 
     onMarkerEvent(args) {
@@ -112,11 +109,13 @@ export class MapComponent {
       });
 
       this.convertShopsToMarkers(this.shops);
-      //this.map.addMarkers(this.mapMarkers);
+
+      this.mapMarkers.forEach((marker : Marker) => {
+        this.mapView.addMarker(marker);
+      })
     });
 
   }
-
 
   convertShopsToMarkers(shops : Shop[]) : void {
     shops.forEach((shop : Shop) => {
