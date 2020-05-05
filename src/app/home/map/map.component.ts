@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, ElementRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { registerElement } from "nativescript-angular/element-registry";
-import { MapboxViewApi, Viewport as MapboxViewport, MapboxMarker } from "nativescript-mapbox";
 //import { AddressOptions, Directions } from "nativescript-directions";
 import { accessToken } from '../../shared/mapbox';
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import { ShopInfosComponent } from '../../shared/shared/shop-infos/shop-infos.component';
 import { ShopsService } from '~/app/services/shops.service';
 import { firestore } from 'nativescript-plugin-firebase';
-import { MapView } from 'nativescript-google-maps-sdk';
+import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { Shop, convertToShop } from '~/app/shared/shop';
 
-registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
+registerElement("MapView", () => MapView);
+
 
 @Component({
   selector: 'ns-map',
@@ -51,45 +51,54 @@ registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView
     ])
   ]
 })
-export class MapComponent implements OnInit {
-  private accessToken: string;
+export class MapComponent {
 
-  //private directions: Directions;
-  private map: MapboxViewApi;
+  
+  latitude =  46.6;
+    longitude = 9.20;
+    zoom = 8;
+    minZoom = 0;
+    maxZoom = 22;
+    bearing = 0;
+    tilt = 0;
+    padding = [40, 40, 40, 40];
+    mapView: MapView;
 
-  private mapMarkers : MapboxMarker[] = [];
-  private shops: Shop[] = [];
-
+    private mapMarkers : Marker[] = [];
+    private shops: Shop[] = [];
+  
+    lastCamera: String;
 
 
   constructor(private modalService: ModalDialogService,
     private viewContainerRef: ViewContainerRef,
     public shopService: ShopsService) {
     //this.directions = new Directions();
-  }
 
-  ngOnInit(): void {
+    }
 
-    this.accessToken = accessToken;
+    //Map events
+    onMapReady(event) {
+        console.log('Map Ready');
+
+        this.mapView = event.object;
 
 
-    /*  this.showDirectionsTo([
-       {
-         lat: 43.421834,
-         lng: 24.086096,
-       },
-       {
-         lat: 52.1851585,
-         lng: 5.3974241
-       }
-     ]); */
-  }
+        var marker = new Marker();
+        marker.position = Position.positionFromLatLng(-33.86, 151.20);
+        marker.title = "Sydney";
+        marker.snippet = "Australia";
+        marker.userData = {index: 1};
+        this.mapView.addMarker(marker);
+    }
 
-  onMapReady(args): void {
-    this.map = args.map;
 
-    this.loadMarkers();
-  }
+
+    onMarkerEvent(args) {
+        console.log("Marker Event: '" + args.eventName
+            + "' triggered on: " + args.marker.title
+            + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
+    }
 
 
   loadMarkers(): void {
@@ -103,7 +112,7 @@ export class MapComponent implements OnInit {
       });
 
       this.convertShopsToMarkers(this.shops);
-      this.map.addMarkers(this.mapMarkers);
+      //this.map.addMarkers(this.mapMarkers);
     });
 
   }
@@ -116,26 +125,21 @@ export class MapComponent implements OnInit {
 
   }
 
-  convertToMarker(shop: Shop) : MapboxMarker {
-    console.log("shop.promotions.length >= 1", shop.promotions.length >= 1);
-    let marker : MapboxMarker = {
-      lat: shop.mapPosition.latitude,
-      lng: shop.mapPosition.longitude,
-      iconPath: shop.promotions.length >= 1 ? "iconmapmarkerpromotions.png" : "res/@drawable/iconmapmarker.png",
-      onCalloutTap: () => {this.showRestaurant() },
-      title: shop.name,
-      subtitle: shop.category
-    };
+  convertToMarker(shop: Shop) : Marker {
+    //iconPath: shop.promotions.length >= 1 ? "iconmapmarkerpromotions.png" : "res/@drawable/iconmapmarker.png",
 
-    console.log("SHOP MARKER ", marker);
+    const posMap : Position = Position.positionFromLatLng(shop.mapPosition.latitude, shop.mapPosition.longitude);
+
+    var marker : Marker = new Marker();
+    marker.position = posMap;
+    marker.title = shop.name;
+
 
     return marker;
   }
 
   showPromotions() {
-    this.map.removeMarkers().then(() => {
-      //this.map.addMarkers(makers);
-    })
+    //this.map.removeAllMarkers().
   }
 
   showRestaurant() {

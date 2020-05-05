@@ -1,10 +1,14 @@
 <StackLayout>
-    <Button class="-primary" text="Show restaurants with promotions" (tap)="showPromotions()"></Button>
-    <ContentView height="100%" width="100%">
-        <MapView [accessToken]="accessToken" mapStyle="traffic_day" latitude="49.2373156" longitude="6.9984005"
-            hideCompass="true" zoomLevel="16" showUserLocation="false" disableZoom="false" disableRotation="false"
-            disableScroll="false" disableTilt="false" (mapReady)="onMapReady($event)">
-        </MapView>
-    </ContentView>
-  
+    <Page>
+    <GridLayout height="400">
+        <MapView #mapView [latitude]="latitude" [longitude]="longitude"
+        [zoom]="zoom" [minZoom]="minZoom" [maxZoom]="maxZoom" [bearing]="bearing"
+        [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
+        (markerSelect)="onMarkerEvent($event)" (markerBeginDragging)="onMarkerEvent($event)"
+        (markerEndDragging)="onMarkerEvent($event)" (markerDrag)="onMarkerEvent($event)"
+        (markerInfoWindowTapped)="onMarkerEvent($event)" (coordinateTapped)="onCoordinateTapped($event)"
+        (cameraChanged)="onCameraChanged($event)"
+        (cameraMove)="onCameraMove($event)"></MapView>
+    </GridLayout>
+    </Page>
 </StackLayout>
