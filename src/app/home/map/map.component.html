@@ -1,0 +1,15 @@
+<StackLayout>
+
+    <Image src="res://iconmapmarkerpromotions" stretch ="none"> </Image>
+    <Image src="res/iconmapmarkerpromotions" stretch ="none"> </Image>
+    <Image src="iconmapmarkerpromotions" stretch ="none"> </Image>
+
+    <Button class="-primary" text="Show restaurants with promotions" (tap)="showPromotions()"></Button>
+    <ContentView height="100%" width="100%">
+        <Mapbox [accessToken]="accessToken" mapStyle="traffic_day" latitude="49.2373156" longitude="6.9984005"
+            hideCompass="true" zoomLevel="16" showUserLocation="false" disableZoom="false" disableRotation="false"
+            disableScroll="false" disableTilt="false" (mapReady)="onMapReady($event)">
+        </Mapbox>
+    </ContentView>
+  
+</StackLayout>

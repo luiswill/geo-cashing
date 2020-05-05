@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922705874162",
+    "firebase_url": "https://skiptheline-d9a99.firebaseio.com",
+    "project_id": "skiptheline-d9a99",
+    "storage_bucket": "skiptheline-d9a99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922705874162:android:7cc1a3ffdb9d7cd04f546b",
+        "android_client_info": {
+          "package_name": "org.nativescript.skiptheline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922705874162-erq65hvktocaldufvr167sn450cer9m5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC337dS6G09EVIzNviDB4vNyYtDYK5Zzug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922705874162-erq65hvktocaldufvr167sn450cer9m5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
