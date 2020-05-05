@@ -8,9 +8,10 @@ import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/mod
 import { ShopInfosComponent } from '../../shared/shared/shop-infos/shop-infos.component';
 import { ShopsService } from '~/app/services/shops.service';
 import { firestore } from 'nativescript-plugin-firebase';
+import { MapView } from 'nativescript-google-maps-sdk';
 import { Shop, convertToShop } from '~/app/shared/shop';
 
-registerElement("Mapbox", () => require("nativescript-mapbox").MapboxView);
+registerElement("MapView", () => require("nativescript-google-maps-sdk").MapView);
 
 @Component({
   selector: 'ns-map',

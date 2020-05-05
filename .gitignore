@@ -3,6 +3,9 @@ hooks/
 node_modules/
 platforms/
 
+#api Key
+/src/app/shared/baseurl.ts
+
 # NativeScript Template
 *.js.map
 *.js
