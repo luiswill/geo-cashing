@@ -1,10 +1,13 @@
 <StackLayout>
     <Page>
-    <GridLayout height="400">
-        <MapView #mapView [latitude]="latitude" [longitude]="longitude"
-        [zoom]="zoom" [minZoom]="minZoom" [maxZoom]="maxZoom" [bearing]="bearing"
-        [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
-        (markerSelect)="onMarkerEvent($event)" ></MapView>
-    </GridLayout>
+        <GridLayout>
+            <MapView  row="0" #mapView [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [minZoom]="minZoom"
+                [maxZoom]="maxZoom" [bearing]="bearing" [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding"
+                (mapReady)="onMapReady($event)" (markerSelect)="onMarkerEvent($event)">
+            </MapView>
+
+            <Fab:fab id="fabButtonBottomRight"  icon="res://qrcode" (tap)="fabTap" class="fa-solid fab fas fab-button bottom-right" ></Fab:fab>
+        </GridLayout>
+        
     </Page>
 </StackLayout>

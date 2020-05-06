@@ -1,6 +1,11 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BarcodeScanner } from "nativescript-barcodescanner";
+import { registerElement } from "nativescript-angular/element-registry";
 
+registerElement(
+  'Fab',
+  () => require('@nstudio/nativescript-floatingactionbutton').Fab
+);
 @Component({
   selector: 'ns-qrcode',
   templateUrl: './qrcode.component.html',

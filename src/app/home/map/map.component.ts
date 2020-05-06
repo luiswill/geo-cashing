@@ -9,10 +9,15 @@ import { ShopsService } from '~/app/services/shops.service';
 import { firestore } from 'nativescript-plugin-firebase';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { Shop, convertToShop } from '~/app/shared/shop';
+import { View, getViewById, ViewBase } from 'tns-core-modules/ui/page/page';
+import { screen } from "tns-core-modules/platform";
 
 registerElement("MapView", () => MapView);
 
-
+registerElement(
+  'Fab',
+  () => require('@nstudio/nativescript-floatingactionbutton').Fab
+);
 @Component({
   selector: 'ns-map',
   templateUrl: './map.component.html',
@@ -52,7 +57,6 @@ registerElement("MapView", () => MapView);
   ]
 })
 export class MapComponent {
-
   
   latitude =  46.6;
     longitude = 9.20;
@@ -77,6 +81,17 @@ export class MapComponent {
 
     }
 
+    ngAfterViewInit(): void {
+
+
+
+
+    }
+
+    fabTap() : void {
+
+    }
+
     //Map events
     onMapReady(event) {
         console.log('Map Ready');
@@ -88,9 +103,6 @@ export class MapComponent {
     }
 
 
-    
-
-
     onMarkerEvent(args) {
         console.log("Marker Event: '" + args.eventName
             + "' triggered on: " + args.marker.title
@@ -100,6 +112,7 @@ export class MapComponent {
 
   loadMarkers(): void {
     this.shopService.getShops().then((querySnapshot: firestore.QuerySnapshot) => {
+
       querySnapshot.forEach((doc: firestore.DocumentSnapshot) => {
 
         if (doc.exists) {
@@ -132,6 +145,8 @@ export class MapComponent {
     var marker : Marker = new Marker();
     marker.position = posMap;
     marker.title = shop.name;
+    marker.snippet = "test";
+    marker.userData = "user data";
 
 
     return marker;
