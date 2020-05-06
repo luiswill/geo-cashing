@@ -12,7 +12,7 @@ export class CardMembershipComponent implements OnInit {
   frontAppleCard: GridLayout;
   backAppleCard: GridLayout;
   appleCardParentView: GridLayout;
-  frontCardInteraction: boolean = false;
+  frontCardInteraction: boolean = true;
   constructor(private _page: Page) { }
 
   ngOnInit(): void {
@@ -23,11 +23,12 @@ export class CardMembershipComponent implements OnInit {
     this.frontAppleCard = this._page.getViewById('frontAppleCard');
     this.backAppleCard = this._page.getViewById('backAppleCard');
     this.appleCardParentView = this._page.getViewById('appleCardParentView');
-    this.onRotateCard('v');
+
   }
 
   onThemeSelectorTap(theme: string): void {
     this.appleCardParentView.className = theme;
+    this.onRotateCard("h");
   }
 
   animateAppleCard(view: GridLayout, classes: string): void {
