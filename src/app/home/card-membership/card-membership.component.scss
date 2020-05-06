@@ -4,7 +4,7 @@ $white-color: #ffffff;
 $black-color: #000000;
 
 @mixin set-bg-image($imageName) {
-  background-image: url("res://#{$imageName}.png");
+  background-image: url("res://#{$imageName}");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
