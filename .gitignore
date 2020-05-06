@@ -3,6 +3,10 @@ hooks/
 node_modules/
 platforms/
 
+#api
+
+App_Resources/Android/src/main/res/values/nativescript_google_maps_api.xml
+
 #api Key
 /src/app/shared/baseurl.ts
 
