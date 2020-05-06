@@ -4,7 +4,7 @@ $white-color: #ffffff;
 $black-color: #000000;
 
 @mixin set-bg-image($imageName) {
-  background-image: url("~/images/#{$imageName}.png");
+  background-image: url("res://#{$imageName}.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -17,40 +17,40 @@ $theme-list-map: (
     apple-card-background-color: #F9F7F8,
     apple-card-name-color: #6F7275,
     apple-card-icon-color: #BBBAB7,
-    apple-card-image-front: "music-03",
-    apple-card-image-back: "music-04"
+    apple-card-image-front: "music1",
+    apple-card-image-back: "music3"
   ),
   theme2: (
     apple-card-border-color: #5156A6,
     apple-card-background-color: #6369CA,
     apple-card-name-color: #ffffff,
     apple-card-icon-color: #D8DAF2,
-    apple-card-image-front: "music-03",
-    apple-card-image-back: "music-04"
+    apple-card-image-front: "music1",
+    apple-card-image-back: "music2"
   ),
   theme3: (
     apple-card-border-color: #E8935D,
     apple-card-background-color: #FFB385,
     apple-card-name-color: #FFFFFF,
     apple-card-icon-color: #E8935D,
-    apple-card-image-front: "music-05",
-    apple-card-image-back: "music-03"
+    apple-card-image-front: "music1",
+    apple-card-image-back: "music3"
   ),
   theme4: (
     apple-card-border-color: #CACAF9,
     apple-card-background-color: #EAEAFF,
     apple-card-name-color: #63376E,
     apple-card-icon-color: #CACAF9,
-    apple-card-image-front: "music-05",
-    apple-card-image-back: "music-03"
+    apple-card-image-front: "music3",
+    apple-card-image-back: "music2"
   ),
   theme5: (
     apple-card-border-color: #B766CC,
     apple-card-background-color: #884B96,
     apple-card-name-color: #FFFFFF,
     apple-card-icon-color: #B766CC,
-    apple-card-image-front: "music-04",
-    apple-card-image-back: "music-05"
+    apple-card-image-front: "music3",
+    apple-card-image-back: "music1"
   )
 );
 
