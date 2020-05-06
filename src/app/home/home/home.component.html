@@ -11,22 +11,16 @@
             </TabContentItem>
 
             <TabContentItem [backgroundColor]="tabList[1].backgroundColor">
-                <StackLayout>
-                    <ns-qrcode></ns-qrcode>
-                </StackLayout>
-            </TabContentItem>
-
-            <TabContentItem [backgroundColor]="tabList[2].backgroundColor">
                 <ns-membership-card></ns-membership-card>
             </TabContentItem>
 
-            <TabContentItem [backgroundColor]="tabList[3].backgroundColor">
+            <TabContentItem [backgroundColor]="tabList[2].backgroundColor">
                 <StackLayout>
                     <Label text="Bottom Nav Content 4" class="h1 text-center p-t-20"></Label>
                 </StackLayout>
             </TabContentItem>
 
-            <TabContentItem [backgroundColor]="tabList[4].backgroundColor">
+            <TabContentItem [backgroundColor]="tabList[3].backgroundColor">
                 <StackLayout>
                     <Label text="Bottom Nav Content 5" class="h1 text-center p-t-20"></Label>
                 </StackLayout>
@@ -35,10 +29,10 @@
     </GridLayout>
 
     <!-- bottom tabs -->
-    <GridLayout height="auto" verticalAlignment="bottom" columns="*, *, *, *, *">
+    <GridLayout height="auto" verticalAlignment="bottom" columns="*, *, *, *">
 
         <!-- base layer -->
-        <AbsoluteLayout col="0" colSpan="5" verticalAlignment="bottom">
+        <AbsoluteLayout col="0" colSpan="4" verticalAlignment="bottom">
             <GridLayout #tabBGContainer columns="auto, 10, auto, 10, auto">
                 <GridLayout #leftTabs col="0" colSpan="2" height="80"
                     [backgroundColor]="tabContainer.backgroundColor"
@@ -67,12 +61,12 @@
         <GridLayout #tabContents *ngFor="let item of tabList; let i = index"
             [col]="i" marginTop="20" (tap)="onBottomNavTap(i)"
             verticalAlignment="middle">
-            <Label class="fas fab fa-solid" [text]="item.text" verticalAlignment="middle"
-                horizontalAlignment="center" [color]="item.color" fontSize="20"></Label>
+            <Label class="fas fab fa-solid icons" [text]="item.text" verticalAlignment="middle"
+                horizontalAlignment="center" [color]="item.color" fontSize="25"></Label>
         </GridLayout>
 
         <!-- pan layer -->
-        <GridLayout #dragCircle column="0" colSpan="5" (pan)="onCenterCirclePan($event)"
+        <GridLayout #dragCircle column="0" colSpan="4" (pan)="onCenterCirclePan($event)"
             verticalAlignment="center" horizontalAlignment="center" height="90"
             width="90" backgroundColor="transparent" borderRadius="45"></GridLayout>
 

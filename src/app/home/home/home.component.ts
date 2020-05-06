@@ -35,7 +35,6 @@ export class HomeComponent implements AfterViewInit {
     };
     tabList: { text: string, icon?: string, color?: string, backgroundColor: string, fadeColor?: string }[] = [
         { text: String.fromCharCode(parseInt('f5a0', 16)), backgroundColor: '#5B37B7', color: '#000' },
-        { text: String.fromCharCode(0xf029), backgroundColor: '#C9449D', color: '#000' },
         { text: String.fromCharCode(0xf2c2), backgroundColor: '#4195AA', color: '#000' },
         { text: String.fromCharCode(0xf075), backgroundColor: '#E6A938', color: '#000' },
         { text: String.fromCharCode(0xf080), backgroundColor: '#4A9F6E', color: '#000' }
@@ -137,7 +136,7 @@ export class HomeComponent implements AfterViewInit {
         this.rightTabs.nativeElement.width = screen.mainScreen.widthDIPs;
         this.centerPatch.nativeElement.width = 100;
 
-        this.tabBGContainer.nativeElement.translateX = - (screen.mainScreen.widthDIPs / 2) - (80 / 2);
+        this.tabBGContainer.nativeElement.translateX = - (screen.mainScreen.widthDIPs / 2) - (10 / 2);
 
         // set default selected tab
         const tabContentsArr = this.tabContents.toArray();
@@ -172,6 +171,6 @@ export class HomeComponent implements AfterViewInit {
     }
 
     getTabTranslateX(index: number): number {
-        return index * screen.mainScreen.widthDIPs / this.tabList.length - (screen.mainScreen.widthDIPs / 2) + (80 / 2)
+        return index * screen.mainScreen.widthDIPs / this.tabList.length - (screen.mainScreen.widthDIPs / 2) + (10 / 2)
     }
 }
