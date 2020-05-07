@@ -155,65 +155,44 @@ export class MapComponent {
     marker.title = shop.name;
     marker.snippet = "test";
     
+    marker.icon = this.getMapMarkerImage();
+  
+    return marker;
+  }
+
+
+  getMapMarkerImage() : Image {
     const imageSource = fromResource("icon");
+
+    let icon : Image = new Image();
 
     let mutable = BitmapFactory.makeMutable(imageSource);
     BitmapFactory.asBitmap(mutable).dispose((imageBitmap) => {
         /* Set the source of the bitmap */
 
-        /* resize with aspect ratio */
-        let newImageBitmap = imageBitmap.resizeMax(64);
-        let newImageSrc = newImageBitmap.toImageSource();
+        
+        imageBitmap.writeText("68", '100, 100', {
+          color: new Color("#000000"),
+          size: 50
+          // name: 'Roboto'
+          }); 
 
-        /* Create new image for the icon */
-        let iconImage = new Image();
-        iconImage.imageSource = newImageSrc;
+        /* resize with aspect ratio */
+        let newImageBitmap = imageBitmap.resizeMax(64);        
+
+
+
+        let newImageSrc = newImageBitmap.toImageSource();
+    
 
         /* Bind the new resized image to the icon */
-        marker.icon = iconImage;
+        icon.imageSource = newImageSrc
     });
-  
-    return marker;
-  }
-
-  private getMarkerImage() : BitmapFactory.IBitmap {
-    const markerImage: ImageSource =  <ImageSource> fromResource("icon");
-
-    const markerPng = markerImage.toBase64String('png', 50)
-    return BitmapFactory.asBitmap(markerPng);
-  }
-
-  getIconImage() : Image {
-    const markerImg = this.getMarkerImage();
-    let bmp = BitmapFactory.create(markerImg.width, markerImg.height);
     
-    const icon : Image = new Image();
-    const textTop = markerImg.height - 48;
-
-    bmp.dispose(() => {
-      bmp.insert(markerImg);
-      bmp.writeText("68", `20,${textTop}`, {
-        color: new Color("#000000"),
-        size: 20,
-        // name: 'Roboto'
-      });
-
-      bmp.resizeHeight(10);
-
-      
-      const base64png = bmp.toBase64(BitmapFactory.OutputFormat.PNG, 75);
-
-      icon.src = 'data:image/png;base64,' + base64png;
-      icon.imageSource = fromBase64(base64png);      
-    });
 
     return icon;
   }
-
-  showPromotions() {
-    //this.map.removeAllMarkers().
-  }
-
+  
   showRestaurant() {
     const options: ModalDialogOptions = {
       viewContainerRef: this.viewContainerRef,
