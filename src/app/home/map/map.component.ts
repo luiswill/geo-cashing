@@ -170,15 +170,17 @@ export class MapComponent {
     BitmapFactory.asBitmap(mutable).dispose((imageBitmap) => {
         /* Set the source of the bitmap */
 
+        imageBitmap.drawCircle(80, '200,100',
+          new Color("#ff4400"), new Color("#ff4400"));
         
-        imageBitmap.writeText("68", '100, 100', {
-          color: new Color("#000000"),
-          size: 50
+        imageBitmap.writeText("68", '145, 135', {
+          color: new Color("#FFFFFF"),
+          size: 35
           // name: 'Roboto'
           }); 
 
         /* resize with aspect ratio */
-        let newImageBitmap = imageBitmap.resizeMax(64);        
+        let newImageBitmap = imageBitmap.resizeMax(150);        
 
 
 
@@ -192,7 +194,7 @@ export class MapComponent {
 
     return icon;
   }
-  
+
   showRestaurant() {
     const options: ModalDialogOptions = {
       viewContainerRef: this.viewContainerRef,
