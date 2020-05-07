@@ -9,8 +9,14 @@ import { ShopsService } from '~/app/services/shops.service';
 import { firestore } from 'nativescript-plugin-firebase';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { Shop, convertToShop } from '~/app/shared/shop';
-import { View, getViewById, ViewBase } from 'tns-core-modules/ui/page/page';
+
+import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
+import * as BitmapFactory from "nativescript-bitmap-factory";
+import * as imageAssetModule from "tns-core-modules/image-asset/image-asset";
+
+import { View, getViewById, ViewBase, Color } from 'tns-core-modules/ui/page/page';
 import { screen } from "tns-core-modules/platform";
+import { Image } from 'tns-core-modules/ui/image/image';
 
 registerElement("MapView", () => MapView);
 
@@ -85,9 +91,11 @@ export class MapComponent {
 
 
 
-
     }
 
+
+
+    
     fabTap() : void {
 
     }
@@ -146,10 +154,60 @@ export class MapComponent {
     marker.position = posMap;
     marker.title = shop.name;
     marker.snippet = "test";
-    marker.userData = "user data";
+    
+    const imageSource = fromResource("icon");
 
+    let mutable = BitmapFactory.makeMutable(imageSource);
+    BitmapFactory.asBitmap(mutable).dispose((imageBitmap) => {
+        /* Set the source of the bitmap */
 
+        /* resize with aspect ratio */
+        let newImageBitmap = imageBitmap.resizeMax(64);
+        let newImageSrc = newImageBitmap.toImageSource();
+
+        /* Create new image for the icon */
+        let iconImage = new Image();
+        iconImage.imageSource = newImageSrc;
+
+        /* Bind the new resized image to the icon */
+        marker.icon = iconImage;
+    });
+  
     return marker;
+  }
+
+  private getMarkerImage() : BitmapFactory.IBitmap {
+    const markerImage: ImageSource =  <ImageSource> fromResource("icon");
+
+    const markerPng = markerImage.toBase64String('png', 50)
+    return BitmapFactory.asBitmap(markerPng);
+  }
+
+  getIconImage() : Image {
+    const markerImg = this.getMarkerImage();
+    let bmp = BitmapFactory.create(markerImg.width, markerImg.height);
+    
+    const icon : Image = new Image();
+    const textTop = markerImg.height - 48;
+
+    bmp.dispose(() => {
+      bmp.insert(markerImg);
+      bmp.writeText("68", `20,${textTop}`, {
+        color: new Color("#000000"),
+        size: 20,
+        // name: 'Roboto'
+      });
+
+      bmp.resizeHeight(10);
+
+      
+      const base64png = bmp.toBase64(BitmapFactory.OutputFormat.PNG, 75);
+
+      icon.src = 'data:image/png;base64,' + base64png;
+      icon.imageSource = fromBase64(base64png);      
+    });
+
+    return icon;
   }
 
   showPromotions() {
