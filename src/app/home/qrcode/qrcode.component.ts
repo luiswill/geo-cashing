@@ -1,6 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BarcodeScanner } from "nativescript-barcodescanner";
 import { registerElement } from "nativescript-angular/element-registry";
+import { Promotion, convertToPromotion } from '~/app/shared/promotion';
+import { PromotionsService } from '~/app/services/promotions.service';
+import { firestore } from 'nativescript-plugin-firebase';
 
 registerElement(
   'Fab',
@@ -19,7 +22,7 @@ export class QrcodeComponent{
   @Output() scanned = new EventEmitter<string>();
 
 
-  constructor() {
+  constructor(private promotionsServices : PromotionsService) {
   }
 
   
@@ -29,9 +32,40 @@ export class QrcodeComponent{
     this.scanned.emit("albacio");
   }
 
+  private showCurrentPromotionOfShopID(idOfRestaurant : string) : void {
+    this.promotionsServices.getCurrentPromotionOfShop(idOfRestaurant).then((doc : firestore.DocumentSnapshot) => {
+
+      if(doc.exists) {
+        let promo : Promotion = convertToPromotion(doc.data())
+        this.tellUserPromotion(promo);
+      } else {
+        // Promotion doesn't exist
+        this.tellUserUnavailablePromotion();
+      }
+      
+    });
+  }
+
+  private tellUserPromotion(promotion : Promotion) {
+    alert({
+      title: "Promotion",
+      message: promotion.text + "\n",
+      okButtonText: "Thanks!"
+    });
+  }
+
+  private tellUserUnavailablePromotion() : void {
+    alert({
+      title: "Promotion",
+      message: "Promotion unavailable\n",
+      okButtonText: "OK"
+    });
+  }
 
   public onScanResult(scanResult: any) {
     console.log(`onScanResult: ${scanResult.text} (${scanResult.format})`);
+
+    
   }
 
   public doCheckAvailable() {
@@ -116,16 +150,15 @@ export class QrcodeComponent{
         console.log("Scanner closed @ " + new Date().getTime());
       }
     }).then(
-        function (result) {
+        (result) => {
           console.log("--- scanned: " + result.text);
+
+          this.showCurrentPromotionOfShopID(result.text);
+
           // Note that this Promise is never invoked when a 'continuousScanCallback' function is provided
           setTimeout(function () {
             // if this alert doesn't show up please upgrade to {N} 2.4.0+
-            alert({
-              title: "Scan result",
-              message: "Format: " + result.format + ",\nValue: " + result.text,
-              okButtonText: "OK"
-            });
+            
           }, 500);
         },
         function (errorMessage) {

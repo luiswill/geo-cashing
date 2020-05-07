@@ -28,6 +28,21 @@ export class FirebaseService {
 
   ngOnInit() {
 
+
+  }
+
+  public getCurrentPromotionId() : string {
+    var d = new Date();
+    var currentMonth = d.getMonth().toString();
+    var currentYear = d.getFullYear().toString();
+
+    return currentMonth + currentYear;
+  }
+
+  public getCurrentPromotionOfShop(id : string) {
+    console.log("restaurant id : ", id)
+    console.log("promotionId ", this.getCurrentPromotionId());
+    return firestore.collection("restaurants").doc(id).collection("promotions").doc(this.getCurrentPromotionId());
   }
 
 

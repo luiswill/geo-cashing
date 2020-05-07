@@ -1,7 +1,1 @@
-<StackLayout>
-    <Button text="SCAN QR CODE" class="-primary -rounded-lg" (tap)="scanTmp()"></Button>
-    <Image src="res://qrcode" height="30"></Image>
-    <Label text="Luis"></Label>
-
-    <Fab:fab text="&#xf028;" class="fab-button fas"></Fab:fab>
-</StackLayout>
+    <Fab:fab id="fabButtonBottomRight" icon="res://qrcode" (tap)="doScanWithBackCamera()" class="fa-solid fab fas fab-button bottom-right" ></Fab:fab>
