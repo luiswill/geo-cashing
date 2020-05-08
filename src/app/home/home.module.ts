@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { MapComponent } from './map/map.component';
 import { ShopInfosComponent } from '../shared/shared/shop-infos/shop-infos.component';
 import { CardMembershipComponent } from './card-membership/card-membership.component';
+import { InfoWindowShopMapComponent } from './map/info-window-shop-map/info-window-shop-map.component';
 
 
 
@@ -14,7 +15,8 @@ import { CardMembershipComponent } from './card-membership/card-membership.compo
     HomeComponent, 
     MapComponent,
     ShopInfosComponent,
-    CardMembershipComponent
+    CardMembershipComponent,
+    InfoWindowShopMapComponent
     ],
   imports: [
     NativeScriptCommonModule

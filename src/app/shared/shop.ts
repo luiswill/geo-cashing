@@ -1,4 +1,5 @@
 import { firestore } from "nativescript-plugin-firebase";
+import { Promotion } from "./promotion";
 
 export interface Shop {
     id: number,
@@ -14,15 +15,14 @@ export interface Shop {
     rating?: string,
     description?: string,
     mapPosition?: firestore.GeoPoint,
-    promotions?: string []
+    promotions?: Promotion[]
 }
 
 
 export var convertToShop = (doc : firestore.DocumentData) => {
 
-
     if(!doc.id || !doc.name ) {
-        throw new Error('Document id/name not available.');
+        throw new Error('Shop converting : Document id/name not available.');
     }
 
     let shop : Shop = {
@@ -37,9 +37,9 @@ export var convertToShop = (doc : firestore.DocumentData) => {
         comments : doc.comments,
         isLike : doc.isLike,
         description: doc.description,
-        mapPosition: doc.mapPosition,
-        promotions: doc.promotions
+        mapPosition: doc.mapPosition
     }
+
 
     return shop;
 }

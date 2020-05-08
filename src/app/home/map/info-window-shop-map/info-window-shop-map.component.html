@@ -1,0 +1,12 @@
+<StackLayout id="info-window-container">
+    <StackLayout orientation="vertical" id="info-window-stack-layout">
+
+        <Label [text]="shop.name" class="label-shop-name"></Label>
+
+        <Label [text]="shop.description" class="label-shop-description"></Label>
+        <StackLayout orientation="horizontal">
+            <Label text="&#xf3a5;" class="icon-shop-promotion"></Label>
+            <Label [text]="shop.promotions[0].peopleLikedCount + ' aiment cette promotion.'" class="label-shop-promotion-text"></Label>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

@@ -1,27 +1,34 @@
 <ActionBar title="Membership Card">
 </ActionBar>
-<GridLayout id="appleCardParentView" rows="auto,*,*" columns="*" class="theme2" (click)="onRotateCard('h')">
-    <GridLayout rows="*" columns="auto,auto,auto,auto,auto" class="content-buttons color-selector">
-        <Button row="0" col="0" class="theme2-bg" (tap)="onThemeSelectorTap('theme2')"></Button>
-        <Button row="0" col="1" class="theme1-bg" (tap)="onThemeSelectorTap('theme1')"></Button>
-        <Button row="0" col="2" class="theme3-bg" (tap)="onThemeSelectorTap('theme3')"></Button>
-        <Button row="0" col="3" class="theme4-bg" (tap)="onThemeSelectorTap('theme4')"></Button>
-        <Button row="0" col="4" class="theme5-bg" (tap)="onThemeSelectorTap('theme5')"></Button>
-    </GridLayout>
-    <GridLayout id="backAppleCard" row="1" col="0" rows="4*,1*" columns="*,*" class="apple-card apple-card-back" (tap)="onRotateCard('v')">
-        <Label row="0" col="0" textWrap="true" class="name">
-            <FormattedString>
-                <Span text="User"></Span>
-                <Span text="Name"></Span>
-            </FormattedString>
-        </Label>
-        <Label row="0" col="1" class="fa-brands icon-mastercard" text="&#xf1f1;"></Label>
-        <label row="1" col="0" colSpan="2" class="card-bottom"></label>
+    <GridLayout id="appleCardParentView" rows="auto,*,*" columns="*" class="theme2" (click)="onRotateCard('h')">
+        <GridLayout rows="*" columns="auto,auto,auto,auto,auto" class="content-buttons color-selector">
+            <Button row="0" col="0" class="theme2-bg" (tap)="onThemeSelectorTap('theme2')"></Button>
+            <Button row="0" col="1" class="theme1-bg" (tap)="onThemeSelectorTap('theme1')"></Button>
+            <Button row="0" col="2" class="theme3-bg" (tap)="onThemeSelectorTap('theme3')"></Button>
+            <Button row="0" col="3" class="theme4-bg" (tap)="onThemeSelectorTap('theme4')"></Button>
+            <Button row="0" col="4" class="theme5-bg" (tap)="onThemeSelectorTap('theme5')"></Button>
+        </GridLayout>
+        <GridLayout id="backAppleCard" row="1" col="0" rows="4*,1*" columns="*,*" class="apple-card apple-card-back"
+            (tap)="onRotateCard('v')">
+            <Label row="0" col="0" textWrap="true" class="name">
+                <FormattedString>
+                    <Span text="User"></Span>
+                    <Span text="Name"></Span>
+                </FormattedString>
+            </Label>
+            <Label row="0" col="1" class="fa-brands icon-mastercard" text="&#xf1f1;"></Label>
+            <label row="1" col="0" colSpan="2" class="card-bottom"></label>
+        </GridLayout>
+
+        <GridLayout id="frontAppleCard" row="1" col="0" rows="*,*" columns="2*,1*" class="apple-card apple-card-front"
+            (tap)="onRotateCard('v')">
+            <Label row="0" col="0" class="fa-brands apple-icon" text="&#xf179;"></Label>
+            <Label row="1" col="1" class="sim-card-icon"></Label>
+            <Label row="1" col="0" class="name" text="matthew & luis"></Label>
+        </GridLayout>
+
+
+
     </GridLayout>
 
-    <GridLayout id="frontAppleCard" row="1" col="0" rows="*,*" columns="2*,1*" class="apple-card apple-card-front" (tap)="onRotateCard('v')">
-        <Label row="0" col="0" class="fa-brands apple-icon" text="&#xf179;"></Label>
-        <Label row="1" col="1" class="sim-card-icon"></Label>
-        <Label row="1" col="0" class="name" text="matthew & luis"></Label>
-    </GridLayout>
-</GridLayout>
+    <ns-qrcode></ns-qrcode>

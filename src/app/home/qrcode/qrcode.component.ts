@@ -42,7 +42,6 @@ export class QrcodeComponent{
         // Promotion doesn't exist
         this.tellUserUnavailablePromotion();
       }
-      
     });
   }
 

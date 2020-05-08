@@ -10,7 +10,7 @@ import { firestore } from 'nativescript-plugin-firebase';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { Shop, convertToShop } from '~/app/shared/shop';
 
-import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
+import { ImageSource, fromFile, fromResource, fromBase64 } from "tns-core-modules/image-source";
 import * as BitmapFactory from "nativescript-bitmap-factory";
 import * as imageAssetModule from "tns-core-modules/image-asset/image-asset";
 
@@ -63,21 +63,36 @@ registerElement(
   ]
 })
 export class MapComponent {
-  
-  latitude =  46.6;
-    longitude = 9.20;
-    zoom = 8;
-    minZoom = 0;
-    maxZoom = 22;
-    bearing = 0;
-    tilt = 0;
-    padding = [40, 40, 40, 40];
-    mapView: MapView;
 
-    private mapMarkers : Marker[] = [];
-    private shops: Shop[] = [];
-  
-    lastCamera: String;
+  latitude = 46.6;
+  longitude = 9.20;
+  zoom = 8;
+  minZoom = 0;
+  maxZoom = 22;
+  bearing = 0;
+  tilt = 0;
+  padding = [40, 40, 40, 40];
+  mapView: MapView;
+
+  private mapMarkers: Marker[] = [];
+  private shops: Shop[] = [];
+
+  currentShopSelectedInfos: Shop = {
+    id: 0,
+    name: "Shop",
+    promotions: [
+      {
+        peopleLikedCount: 30,
+        shopId: 0,
+        text: "promotion"
+      }
+    ]
+  };
+
+  isInfoWindowVisible : boolean = false;
+  shopsCounter: number = 0;
+
+  lastCamera: String;
 
 
   constructor(private modalService: ModalDialogService,
@@ -85,40 +100,38 @@ export class MapComponent {
     public shopService: ShopsService) {
     //this.directions = new Directions();
 
-    }
+  }
 
-    ngAfterViewInit(): void {
-
-
-
-    }
+  ngAfterViewInit(): void {
+  }
 
 
+  fabTap(): void {
 
-    
-    fabTap() : void {
+  }
 
-    }
+  //Map events
+  onMapReady(event) {
+    this.mapView = event.object;
 
-    //Map events
-    onMapReady(event) {
-        console.log('Map Ready');
+    this.loadMarkers();
 
-       this.mapView = event.object;
-
-       this.loadMarkers();
-        
-    }
+  }
 
 
-    onMarkerEvent(args) {
-        console.log("Marker Event: '" + args.eventName
-            + "' triggered on: " + args.marker.title
-            + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
-    }
+  onMarkerEvent(args) {
+    this.showInfoWindowOfShop(args.marker.userData.id);
+  }
 
 
-  loadMarkers(): void {
+  private showInfoWindowOfShop(shopId: string): void {
+    this.shopService.getShop(shopId).then((shop: Shop) => {
+      this.isInfoWindowVisible = true;
+      this.currentShopSelectedInfos = shop;
+    })
+  }
+
+  private loadMarkers(): void {
     this.shopService.getShops().then((querySnapshot: firestore.QuerySnapshot) => {
 
       querySnapshot.forEach((doc: firestore.DocumentSnapshot) => {
@@ -131,66 +144,74 @@ export class MapComponent {
 
       this.convertShopsToMarkers(this.shops);
 
-      this.mapMarkers.forEach((marker : Marker) => {
+      this.mapMarkers.forEach((marker: Marker) => {
         this.mapView.addMarker(marker);
       })
     });
 
   }
 
-  convertShopsToMarkers(shops : Shop[]) : void {
-    shops.forEach((shop : Shop) => {
+  convertShopsToMarkers(shops: Shop[]): void {
+    shops.forEach((shop: Shop) => {
       this.mapMarkers.push(this.convertToMarker(shop));
     });
 
   }
 
-  convertToMarker(shop: Shop) : Marker {
+  getNumber(): number {
+    return 3 + 3;
+  }
+
+  convertToMarker(shop: Shop): Marker {
     //iconPath: shop.promotions.length >= 1 ? "iconmapmarkerpromotions.png" : "res/@drawable/iconmapmarker.png",
 
-    const posMap : Position = Position.positionFromLatLng(shop.mapPosition.latitude, shop.mapPosition.longitude);
+    const posMap: Position = Position.positionFromLatLng(shop.mapPosition.latitude, shop.mapPosition.longitude);
 
-    var marker : Marker = new Marker();
+    var marker: Marker = new Marker();
+
+
     marker.position = posMap;
     marker.title = shop.name;
     marker.snippet = "test";
-    
+    marker.userData = { id: "albacio", placementInArray: this.shopsCounter };
+
+    this.shopsCounter++;
+
     marker.icon = this.getMapMarkerImage();
-  
+
     return marker;
   }
 
 
-  getMapMarkerImage() : Image {
+  getMapMarkerImage(): Image {
     const imageSource = fromResource("icon");
 
-    let icon : Image = new Image();
+    let icon: Image = new Image();
 
     let mutable = BitmapFactory.makeMutable(imageSource);
     BitmapFactory.asBitmap(mutable).dispose((imageBitmap) => {
-        /* Set the source of the bitmap */
+      /* Set the source of the bitmap */
 
-        imageBitmap.drawCircle(80, '200,100',
-          new Color("#ff4400"), new Color("#ff4400"));
-        
-        imageBitmap.writeText("68", '145, 135', {
-          color: new Color("#FFFFFF"),
-          size: 35
-          // name: 'Roboto'
-          }); 
+      imageBitmap.drawCircle(80, '200,100',
+        new Color("#ff4400"), new Color("#ff4400"));
 
-        /* resize with aspect ratio */
-        let newImageBitmap = imageBitmap.resizeMax(150);        
+      imageBitmap.writeText("68", '145, 135', {
+        color: new Color("#FFFFFF"),
+        size: 35
+        // name: 'Roboto'
+      });
+
+      /* resize with aspect ratio */
+      let newImageBitmap = imageBitmap.resizeMax(150);
 
 
 
-        let newImageSrc = newImageBitmap.toImageSource();
-    
+      let newImageSrc = newImageBitmap.toImageSource();
 
-        /* Bind the new resized image to the icon */
-        icon.imageSource = newImageSrc
+      /* Bind the new resized image to the icon */
+      icon.imageSource = newImageSrc;
     });
-    
+
 
     return icon;
   }
@@ -208,16 +229,16 @@ export class MapComponent {
   private showDirectionsTo(): void {
 
     // addresses: Array<AddressOptions>
-/*     this.directions.navigate({
-      to: addresses,
-      ios: {
-        // Apple Maps can't show waypoints, so open Google maps if available in that case
-        preferGoogleMaps: addresses.length > 1,
-        allowGoogleMapsWeb: true
-      }
-    })
-      .then(() => console.log("Showed directions successful."))
-      .catch(error => console.log(error)); */
+    /*     this.directions.navigate({
+          to: addresses,
+          ios: {
+            // Apple Maps can't show waypoints, so open Google maps if available in that case
+            preferGoogleMaps: addresses.length > 1,
+            allowGoogleMapsWeb: true
+          }
+        })
+          .then(() => console.log("Showed directions successful."))
+          .catch(error => console.log(error)); */
   }
 
 }

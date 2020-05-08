@@ -3,15 +3,18 @@ import { Injectable } from '@angular/core';
 const firebase = require("nativescript-plugin-firebase");
 import { firestore } from "nativescript-plugin-firebase";
 
+import { getCurrentPromotionId, convertToPromotion, Promotion } from '../shared/promotion';
+import { convertToShop, Shop } from '../shared/shop';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  private restaurantName : string = 'albacio'; 
+  private restaurantName: string = 'albacio';
 
-  constructor() { 
+  constructor() {
     console.log("Firebase init..")
     firebase.init({
       // Optionally pass in properties for database, authentication and cloud messaging,
@@ -31,26 +34,21 @@ export class FirebaseService {
 
   }
 
-  public getCurrentPromotionId() : string {
-    var d = new Date();
-    var currentMonth = d.getMonth().toString();
-    var currentYear = d.getFullYear().toString();
+  public getCurrentPromotionOfShop(id: string) {
 
-    return currentMonth + currentYear;
+    return firestore.collection("restaurants").doc(id).collection("promotions").doc(getCurrentPromotionId());
   }
 
-  public getCurrentPromotionOfShop(id : string) {
-    console.log("restaurant id : ", id)
-    console.log("promotionId ", this.getCurrentPromotionId());
-    return firestore.collection("restaurants").doc(id).collection("promotions").doc(this.getCurrentPromotionId());
+  public getPromotionsOfShop(id: string): firestore.CollectionReference {
+    return firestore.collection("restaurants").doc(id).collection("promotions");
   }
 
 
-  public getDish(docId: string) : firestore.DocumentReference{
+  public getDish(docId: string): firestore.DocumentReference {
     return firestore.collection("restaurants").doc(this.restaurantName).collection("dishes").doc(docId);
   }
 
-  public getDishes() : firestore.CollectionReference {
+  public getDishes(): firestore.CollectionReference {
     return firestore.collection("restaurants").doc(this.restaurantName).collection("dishes");
   }
 
@@ -59,7 +57,6 @@ export class FirebaseService {
   }
 
   public getShops() : firestore.CollectionReference {
-    return firestore.collection("restaurants");
-  }
-
+      return firestore.collection("restaurants");
+    }
 }

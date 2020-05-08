@@ -5,9 +5,8 @@
                 [maxZoom]="maxZoom" [bearing]="bearing" [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding"
                 (mapReady)="onMapReady($event)" (markerSelect)="onMarkerEvent($event)">
             </MapView>
-
-            <ns-qrcode></ns-qrcode>
+            <ns-info-window-shop-map *ngIf="isInfoWindowVisible" row="1" [shop]="currentShopSelectedInfos" class="info-window"></ns-info-window-shop-map> 
         </GridLayout>
-        
+               
     </Page>
 </StackLayout>

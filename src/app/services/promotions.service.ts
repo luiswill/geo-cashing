@@ -13,4 +13,9 @@ export class PromotionsService {
   getCurrentPromotionOfShop(id : string) : Promise<firestore.DocumentSnapshot> {
     return this.firebase.getCurrentPromotionOfShop(id).get();
   }
+
+  getPromotionsOfShop(id : string) : Promise<firestore.QuerySnapshot> {
+    return this.firebase.getPromotionsOfShop(id).get();
+  }
+
 }
