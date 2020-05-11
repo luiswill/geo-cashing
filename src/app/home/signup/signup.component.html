@@ -1,0 +1,10 @@
+<StackLayout>
+
+    <StackLayout *ngIf="isConnected">
+        <Label *ngIf="isConnected" [text]="'You are currently logged in as ' + user?.displayName"></Label>
+    </StackLayout>
+    <StackLayout *ngIf="!isConnected">
+        <Button text="Login with Google" class="btn btn-primary" (tap)="signUp()"></Button>
+    </StackLayout>
+
+</StackLayout>
