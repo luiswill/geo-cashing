@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GridLayout } from "tns-core-modules/ui/layouts/grid-layout";
 import { Page } from 'tns-core-modules/ui/page/page';
+import { FirebaseService } from '~/app/services/firebase.service';
+import { AppUser } from '~/app/shared/appUser';
 
 @Component({
   selector: 'ns-membership-card',
@@ -8,47 +10,18 @@ import { Page } from 'tns-core-modules/ui/page/page';
   styleUrls: ['./card-membership.component.scss']
 })
 export class CardMembershipComponent implements OnInit {
+  appUser : AppUser;
 
-  frontAppleCard: GridLayout;
-  backAppleCard: GridLayout;
-  appleCardParentView: GridLayout;
-  frontCardInteraction: boolean = true;
-  constructor(private _page: Page) { }
+
+  constructor(
+    private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
+    this.firebaseService.user.subscribe((appUser) => {
+      this.appUser = appUser;
+    });
 
   }
 
-  ngAfterViewInit(): void {
-    this.frontAppleCard = this._page.getViewById('frontAppleCard');
-    this.backAppleCard = this._page.getViewById('backAppleCard');
-    this.appleCardParentView = this._page.getViewById('appleCardParentView');
-
-  }
-
-  onThemeSelectorTap(theme: string): void {
-    this.appleCardParentView.className = theme;
-    this.onRotateCard("h");
-  }
-
-  animateAppleCard(view: GridLayout, classes: string): void {
-    view.className = classes;
-  }
-
-  onRotateCard(rotate: string) {
-    if (!this.frontCardInteraction) {
-      this.animateAppleCard(this.frontAppleCard, this.getRotationStyle('front', 'back', rotate));
-      this.animateAppleCard(this.backAppleCard, this.getRotationStyle('back', 'front', rotate));
-      this.frontCardInteraction = true;
-    } else {
-      this.animateAppleCard(this.frontAppleCard, this.getRotationStyle('front', 'front', rotate));
-      this.animateAppleCard(this.backAppleCard, this.getRotationStyle('back', 'back', rotate));
-      this.frontCardInteraction = false;
-    }
-  }
-
-  getRotationStyle(from: string, to: string, rotate: string) {
-    return `apple-card apple-card-${from} flip-${rotate}-${to}`;
-  }
 
 }

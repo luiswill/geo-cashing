@@ -5,9 +5,16 @@ export interface AppUser {
     displayName: string,
     email: string,
     providers?: Provider[],
-    photoUrl?: string
+    photoUrl?: string,
+    subscription: Subscription.FREE
 }
 
+
+export enum Subscription {
+    FREE,
+    LOW_COST,
+    HIGH_COST
+}
 
 export var convertToUser = (user: User) => {
 
@@ -20,7 +27,8 @@ export var convertToUser = (user: User) => {
         displayName : user.displayName,
         email: user.displayName,
         providers: user.providers,
-        photoUrl: user.photoURL
+        photoUrl: user.photoURL,
+        subscription: Subscription.FREE
     }
 
 

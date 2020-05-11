@@ -1,0 +1,10 @@
+<StackLayout class="userInfos">
+    <Image class="userInfos__photo" [src]="user.photoUrl"></Image>
+    <Label class="userInfos__displayName" [text]="user.displayName"></Label>
+    <StackLayout class="userInfos__subscriptionContainer userInfos__subscriptionContainer--free" *ngIf="user.subscription == 0">
+        <Label class="userInfos__membershipStatus userInfos__membershipStatus--free" text="Free membership"></Label>
+        <Label class="userInfos__membershipStatusDescription userInfos__membershipStatusDescription--free" textWrap="true" text="You are not able to take advantage of the promotions."></Label>
+
+    </StackLayout>
+    
+</StackLayout>

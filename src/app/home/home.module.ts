@@ -7,6 +7,8 @@ import { ShopInfosComponent } from '../shared/shared/shop-infos/shop-infos.compo
 import { CardMembershipComponent } from './card-membership/card-membership.component';
 import { InfoWindowShopMapComponent } from './map/info-window-shop-map/info-window-shop-map.component';
 import { SignupComponent } from './signup/signup.component';
+import { UserInfosComponent } from './user-infos/user-infos.component';
+import { CardComponent } from './card/card.component';
 
 
 
@@ -18,7 +20,9 @@ import { SignupComponent } from './signup/signup.component';
     ShopInfosComponent,
     CardMembershipComponent,
     InfoWindowShopMapComponent,
-    SignupComponent
+    SignupComponent,
+    UserInfosComponent,
+    CardComponent
     ],
   imports: [
     NativeScriptCommonModule
