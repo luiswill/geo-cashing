@@ -177,13 +177,13 @@ export class MapComponent {
 
     this.shopsCounter++;
 
-    marker.icon = this.getMapMarkerImage();
+    marker.icon = this.getMapMarkerImage(shop.likes);
 
     return marker;
   }
 
 
-  getMapMarkerImage(): Image {
+  getMapMarkerImage(shopLikes : number): Image {
     const imageSource = fromResource("icon");
 
     let icon: Image = new Image();
@@ -195,7 +195,7 @@ export class MapComponent {
       imageBitmap.drawCircle(80, '200,100',
         new Color("#ff4400"), new Color("#ff4400"));
 
-      imageBitmap.writeText("68", '145, 135', {
+      imageBitmap.writeText(shopLikes, '145, 135', {
         color: new Color("#FFFFFF"),
         size: 35
         // name: 'Roboto'
