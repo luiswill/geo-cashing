@@ -2,7 +2,7 @@ import { firestore } from "nativescript-plugin-firebase";
 import { Promotion } from "./promotion";
 
 export interface Shop {
-    id: number,
+    id: string,
     name: string,
     cover?: string,
     images?: Array<string>,

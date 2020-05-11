@@ -1,7 +1,7 @@
 import { firestore } from "nativescript-plugin-firebase";
 
 export interface Promotion {
-    shopId: number,
+    shopId: string,
     text: string,
     peopleLikedCount: number
 }

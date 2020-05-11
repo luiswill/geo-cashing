@@ -18,7 +18,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.firebaseService.user.subscribe((user) => {
-      console.log("User is now signed in : ", user);
       this.isConnected = true;
       this.user = user;
     });

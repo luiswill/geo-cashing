@@ -78,12 +78,12 @@ export class MapComponent {
   private shops: Shop[] = [];
 
   currentShopSelectedInfos: Shop = {
-    id: 0,
+    id: "albacio",
     name: "Shop",
     promotions: [
       {
         peopleLikedCount: 30,
-        shopId: 0,
+        shopId: "albacio",
         text: "promotion"
       }
     ]
@@ -132,17 +132,9 @@ export class MapComponent {
   }
 
   private loadMarkers(): void {
-    this.shopService.getShops().then((querySnapshot: firestore.QuerySnapshot) => {
+    this.shopService.getShops().then((shops: Shop[]) => {
 
-      querySnapshot.forEach((doc: firestore.DocumentSnapshot) => {
-
-        if (doc.exists) {
-          let shop: Shop = convertToShop(doc.data());
-          this.shops.push(shop);
-        }
-      });
-
-      this.convertShopsToMarkers(this.shops);
+      this.convertShopsToMarkers(shops);
 
       this.mapMarkers.forEach((marker: Marker) => {
         this.mapView.addMarker(marker);
@@ -173,17 +165,19 @@ export class MapComponent {
     marker.position = posMap;
     marker.title = shop.name;
     marker.snippet = "test";
-    marker.userData = { id: "albacio", placementInArray: this.shopsCounter };
+    marker.userData = { id: shop.id};
 
     this.shopsCounter++;
 
-    marker.icon = this.getMapMarkerImage(shop.likes);
+    console.log("shop : ", shop);
+
+    marker.icon = this.getMapMarkerImage(shop.promotions[0].peopleLikedCount);
 
     return marker;
   }
 
 
-  getMapMarkerImage(shopLikes : number): Image {
+  getMapMarkerImage(promoLikes : number): Image {
     const imageSource = fromResource("icon");
 
     let icon: Image = new Image();
@@ -195,7 +189,7 @@ export class MapComponent {
       imageBitmap.drawCircle(80, '200,100',
         new Color("#ff4400"), new Color("#ff4400"));
 
-      imageBitmap.writeText(shopLikes, '145, 135', {
+      imageBitmap.writeText(promoLikes, '145, 135', {
         color: new Color("#FFFFFF"),
         size: 35
         // name: 'Roboto'

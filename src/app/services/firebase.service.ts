@@ -21,7 +21,6 @@ export class FirebaseService {
 
   constructor() {
     firebase.getCurrentUser().then((user : User) => {
-      console.log("current user is : ", user)
       if(user) {
         this.appUser = new BehaviorSubject<AppUser>(convertToUser(user));
       } else {
@@ -80,7 +79,6 @@ export class FirebaseService {
   }
 
   signUp() {
-    console.log("SIGNING UP");
     firebase.login({
       type: firebase.LoginType.GOOGLE,
       // Optional 
@@ -105,7 +103,6 @@ export class FirebaseService {
 
   public storeUserInDatabase(user): void {
     let appUser: AppUser = convertToUser(user);
-    console.log("firebase user to sign up : ", appUser)
 
     firestore.collection("users").doc(appUser.uid).set(appUser);
   }

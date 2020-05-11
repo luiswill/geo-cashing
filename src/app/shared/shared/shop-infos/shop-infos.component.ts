@@ -31,7 +31,7 @@ export class ShopInfosComponent {
 
     setTimeout(() => {
       let shop: Shop = {
-        id: 1,
+        id: "",
         name: "Manila Ultimate Tombstone Burger",
         cover: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
         images: [
